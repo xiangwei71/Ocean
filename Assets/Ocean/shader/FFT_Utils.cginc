@@ -49,7 +49,7 @@ float2 complex_multiply(float2 c1, float2 c2) {
  * @param {*} power		\  /\  /
  * @param {*} N				 \/  \/  N
  */
-float2 W(uint power, uint N) {
-	float theda = power * -FFT_2_PI / N;
+float2 W(uint power, uint N,float rotate) {
+	float theda = power * (-FFT_2_PI*rotate) / N;
 	return float2( cos(theda), sin(theda) );
 }

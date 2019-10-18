@@ -16,6 +16,7 @@ public class PSCaller : MonoBehaviour {
     public Material add_or_minus;
     public Material multiply_weight;
     public Material Shift;
+    public Material multiply;
 
     int h = 512;
 
@@ -29,6 +30,8 @@ public class PSCaller : MonoBehaviour {
 
         FFT(ref buffer_src, ref buffer_des);
         //do_Shift(ref buffer_src, ref buffer_des);
+
+        Inverse_FFT(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_src);
     }
@@ -45,7 +48,7 @@ public class PSCaller : MonoBehaviour {
         b2 = temp;
     }
 
-    void butterfly(ref RenderTexture b1, ref RenderTexture b2)
+    void butterfly(ref RenderTexture b1, ref RenderTexture b2,bool is_inverse)
     {
         // FFT蝴蝶算法
         // https://developer.nvidia.com/sites/all/modules/custom/gpugems/books/GPUGems2/elementLinks/48_fft_01.jpg?fbclid=IwAR2H-0eU76Zdzrvrn_MPJDliacIK6MSIuLEh060NvqEWKjb1Zxnvb2el7mQ
@@ -57,7 +60,7 @@ public class PSCaller : MonoBehaviour {
         var n_minus_1 = (int)n - 1;
         for (var order = 0; order< n_minus_1; ++order) {
             do_add_or_minus(ref b1, ref b2, order);
-            do_multiply_weight(ref b1, ref b2, order+1);
+            do_multiply_weight(ref b1, ref b2, order+1, is_inverse);
         }
 
        do_add_or_minus(ref  b1, ref  b2, n_minus_1); 
@@ -75,8 +78,9 @@ public class PSCaller : MonoBehaviour {
         swap_texture(ref b1, ref b2);
     }
 
-    void do_multiply_weight(ref RenderTexture b1, ref RenderTexture b2, int order) 
+    void do_multiply_weight(ref RenderTexture b1, ref RenderTexture b2, int order,bool is_inverse) 
     {
+        multiply_weight.SetFloat("_rotate", is_inverse ? -1.0f : 1.0f);
         multiply_weight.SetInt("_order", order);
         Graphics.Blit(b1, b2, multiply_weight);
         swap_texture(ref b1, ref b2);
@@ -95,16 +99,34 @@ public class PSCaller : MonoBehaviour {
         B=MX
         Y=M(B)T
         */
-        butterfly(ref b1, ref b2);
+        butterfly(ref b1, ref b2,false);
 
         // transpose
         Graphics.Blit(b1, b2, Transpose);
         swap_texture(ref b1, ref b2);
 
-        butterfly(ref b1, ref b2);
+        butterfly(ref b1, ref b2, false);
+    }
+
+    void Inverse_FFT(ref RenderTexture b1, ref RenderTexture b2) {
+        butterfly(ref b1, ref b2,true);
+
+        // transpose
+        Graphics.Blit(b1, b2, Transpose);
+        swap_texture(ref b1, ref b2);
+
+        butterfly(ref b1, ref b2,true);
+
+        do_multiply(ref b1, ref b2);
+    }
+
+    void do_multiply(ref RenderTexture b1, ref RenderTexture b2) {
+        multiply.SetFloat("_factor", 1.0f/(h*h));
+        Graphics.Blit(b1, b2, multiply);
+        swap_texture(ref b1, ref b2);
     }
 
 // Update is called once per frame
-void Update () {
+    void Update () {
     }
 }

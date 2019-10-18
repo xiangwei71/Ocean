@@ -1,4 +1,4 @@
-﻿Shader "Hidden/multiply_weight"
+﻿Shader "Hidden/multiply"
 {
     Properties
     {
@@ -16,7 +16,6 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-			#include "FFT_Utils.cginc"
 
             struct appdata
             {
@@ -39,25 +38,13 @@
             }
 
             sampler2D _MainTex;
-			uint _order;
-			float _rotate;
+			float _factor;
 
-			float2 frag(v2f i) : SV_Target
-			{
-				// 轉成整數索引
-				uint2 index = uv_to_uint_index(i.uv);
+            float2 frag (v2f i) : SV_Target
+            {
+				float2 col = tex2D(_MainTex, i.uv).rg;
 
-				uint h = pow(2,_order + 1);
-				uint hh = 0.5 * h;
-
-				uint I = index.y % h;
-				uint power_of_W = floor(I / hh) * (I % hh) * pow(2, FFT_n - 1 - _order);
-
-				//return float2(0, power_of_W);
-				float2 weight = W(power_of_W, FFT_h, _rotate);
-				//return weight;
-				float2 c = tex2D(_MainTex, i.uv).rg;
-				return complex_multiply(weight, c);
+                return col* _factor;
             }
             ENDCG
         }
