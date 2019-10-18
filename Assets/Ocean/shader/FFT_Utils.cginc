@@ -17,7 +17,7 @@ float2 index_to_uv(uint2 index) {
 uint bit_inverse(uint number) {
 	//轉成2進位
 	// https://www.youtube.com/watch?v=h1xB2soEcug&list=LLtNG9vPhMZxQfxCUCfcxLWg&index=2&t=0s
-	uint bite[FFT_n] = { 0,0,0,0,0,0,0,0,0 };
+	uint bite[FFT_n] ;
 	int y;
 	for (y= 0; y < FFT_n; ++y)
 	{
