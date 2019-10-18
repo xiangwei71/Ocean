@@ -45,27 +45,38 @@ public class PSCaller : MonoBehaviour {
 
     void butterfly(ref RenderTexture b1, ref RenderTexture b2)
     {
-        // 蝴蝶算法的第1步:交換位置
-        Graphics.Blit(b1, b2, set_element_order_per_column);
-        swap_texture(ref b1, ref b2);
+        // FFT蝴蝶算法
+        // https://developer.nvidia.com/sites/all/modules/custom/gpugems/books/GPUGems2/elementLinks/48_fft_01.jpg?fbclid=IwAR2H-0eU76Zdzrvrn_MPJDliacIK6MSIuLEh060NvqEWKjb1Zxnvb2el7mQ
 
-        var n = Mathf.Log(h,2);
-        Debug.Log(n);
+        // 蝴蝶算法的第1步:交換位置
+        do_set_element_order_per_column(ref b1, ref b2);
+
+         var n = Mathf.Log(h,2);
         var n_minus_1 = (int)n - 1;
         for (var order = 0; order< n_minus_1; ++order) {
-            //add or minus
-            add_or_minus.SetInt("_order", order);
-            Graphics.Blit(b1, b2, add_or_minus);
-            swap_texture(ref b1, ref b2);
-
-            //multiply weight
-            multiply_weight.SetInt("_order", order+1);
-            Graphics.Blit(b1, b2, multiply_weight);
-            swap_texture(ref b1, ref b2);
+            do_add_or_minus(ref b1, ref b2, order);
+            do_multiply_weight(ref b1, ref b2, order+1);
         }
 
-        //add or minus
-        add_or_minus.SetInt("_order", n_minus_1);
+       do_add_or_minus(ref  b1, ref  b2, n_minus_1); 
+    }
+
+    void do_set_element_order_per_column(ref RenderTexture b1, ref RenderTexture b2)
+    {
+        Graphics.Blit(b1, b2, set_element_order_per_column);
+        swap_texture(ref b1, ref b2);
+    }
+
+    void do_multiply_weight(ref RenderTexture b1, ref RenderTexture b2, int order) 
+    {
+        multiply_weight.SetInt("_order", order);
+        Graphics.Blit(b1, b2, multiply_weight);
+        swap_texture(ref b1, ref b2);
+    }
+
+    void do_add_or_minus(ref RenderTexture b1, ref RenderTexture b2,int order)
+    {
+        add_or_minus.SetInt("_order", order);
         Graphics.Blit(b1, b2, add_or_minus);
         swap_texture(ref b1, ref b2);
     }

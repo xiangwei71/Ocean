@@ -131,15 +131,14 @@
 				return o;
 			}
 
-			float4 frag(v2f i) : SV_Target
+			float2 frag(v2f i) : SV_Target
 			{
 				float2 uv = i.uv;
 
 				//float t = 0.;
 				float t = FFT_2_PI *_Time.y;
 				float2 k = uv * 2. - 1.;// 0~1 to -1~1
-				return float4(h(uv, k, t), 0., 1.);
-				//return float4(t,0., 0., 1.);
+				return h(uv, k, t);
 			}
 			ENDCG
 		}
