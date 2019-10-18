@@ -1,5 +1,6 @@
 ﻿#define FFT_n 9 // 2^FFT_n = FFT_h
 #define  FFT_h 512
+#define FFT_2_PI 6.28
 
 uint2 uv_to_uint_index(float2 uv) {
 	float2 space = 1. / FFT_h;
@@ -33,4 +34,22 @@ uint bit_inverse(uint number) {
 	}
 
 	return bite_inverse_number;
+}
+
+float2 complex_multiply(float2 c1, float2 c2) {
+	float x = c1.x;
+	float y = c1.y;
+	float a = c2.x;
+	float b = c2.y;
+	return float2(a * x - b * y, a * y + b * x);
+}
+
+/**
+ *														power
+ * @param {*} power		\  /\  /
+ * @param {*} N				 \/  \/  N
+ */
+float2 W(uint power, uint N) {
+	float theda = power * -FFT_2_PI / N;
+	return float2( cos(theda), sin(theda) );
 }

@@ -14,6 +14,7 @@ public class PSCaller : MonoBehaviour {
     public Material Transpose;
     public Material set_element_order_per_column;
     public Material add_or_minus;
+    public Material multiply_weight;
 
     int h = 512;
 
@@ -24,8 +25,11 @@ public class PSCaller : MonoBehaviour {
 
         Graphics.Blit(input_texture, buffer_src, Fill);
 
-        add_or_minus.SetInt("_order", 8);
-        Graphics.Blit(buffer_src, buffer_des, add_or_minus);
+        multiply_weight.SetInt("_order",8);
+        Graphics.Blit(buffer_src, buffer_des, multiply_weight);
+
+        //add_or_minus.SetInt("_order", 0);
+        //Graphics.Blit(buffer_src, buffer_des, add_or_minus);
         //swap_texture(ref buffer_src, ref buffer_des);
 
         //Graphics.Blit(buffer_src, buffer_des, set_element_order_per_column);

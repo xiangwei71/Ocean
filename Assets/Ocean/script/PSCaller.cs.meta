@@ -13,6 +13,7 @@ MonoImporter:
   - set_element_order_per_column: {fileID: 2100000, guid: 7104ee19d984b8d4f8ff5b261e58836e,
       type: 2}
   - add_or_minus: {fileID: 2100000, guid: 31b3476ff26ca054fbe53bdf92ff9b33, type: 2}
+  - multiply_weight: {fileID: 2100000, guid: e3873b69c0c02c449a76391bebf921cd, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

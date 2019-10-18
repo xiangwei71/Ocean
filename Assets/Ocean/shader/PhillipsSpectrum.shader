@@ -23,6 +23,7 @@
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
+			#include "FFT_Utils.cginc"
 
 			//公式從這裡看來的
 			//https://zhuanlan.zhihu.com/p/64414956
@@ -36,14 +37,6 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
-
-			float2 complex_multiply(float2 c1, float2 c2) {
-				float x = c1.x;
-				float y = c1.y;
-				float a = c2.x;
-				float b = c2.y;
-				return float2(a * x - b * y,a * y + b * x);
-			}
 
 			float random(float2 v)
 			{
