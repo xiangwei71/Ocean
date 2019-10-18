@@ -13,8 +13,6 @@ public class PSCaller : MonoBehaviour {
     public Material Fill;
     public Material Transpose;
     public Material set_element_order_per_column;
-    int kernal;
-    int[]  bit_reverse;
 
     int h = 512;
 
@@ -22,26 +20,17 @@ public class PSCaller : MonoBehaviour {
         return 0;
     }
 
-    void set_bit_reverse () {
-        bit_reverse = new int[h];
-
-        int n = (int) Mathf.Log (h, 2);
-        for (var i = 0; i < h; ++i) {
-            bit_reverse[i]=do_bit_reverse(i, n);
-        }
-    }
-
     // Start is called before the first frame update
     void Start () {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
 
-        //特別的設定
-        set_bit_reverse ();
-
         Graphics.Blit(input_texture, buffer_src, Fill);
+
         Graphics.Blit(buffer_src, buffer_des, set_element_order_per_column);
-        //Graphics.Blit(buffer_src, buffer_des, Transpose);
+        swap_texture(ref buffer_src, ref buffer_des);
+
+        Graphics.Blit(buffer_src, buffer_des, Transpose);
         //swap_texture(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_des);
