@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FromTexture : MonoBehaviour {
+public class CSCaller : MonoBehaviour {
     public Material mat;
     public ComputeShader shader;
     public RenderTexture buffer_des;
@@ -57,8 +57,8 @@ public class FromTexture : MonoBehaviour {
 
         kernal = shader.FindKernel ("CSMain");
         shader.SetTexture (kernal, "input_texture", input_texture);
-        shader.SetTexture (kernal, "buffer_des", buffer_des);
-        shader.SetTexture (kernal, "buffer_src", buffer_src);
+        shader.SetTexture (kernal, "des", buffer_des);
+        shader.SetTexture (kernal, "src", buffer_src);
 
         set_bit_reverse ();
 

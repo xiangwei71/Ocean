@@ -1,0 +1,22 @@
+﻿// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+struct Bit_Reverse_Buffer
+{
+	uint index;
+};
+RWStructuredBuffer<Bit_Reverse_Buffer> bit_reverse;
+
+//for test
+Texture2D<float4> input_texture;
+
+RWTexture2D<float2> src;
+RWTexture2D<float2> des;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+	src[id.xy] = float2(input_texture[id.xy].r, 0);
+
+	des[id.xy] = src[uint2(id.x, bit_reverse[id.y].index)];
+}
