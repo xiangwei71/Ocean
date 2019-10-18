@@ -1,10 +1,11 @@
-﻿#define FFT_n 9
+﻿#define FFT_n 9 // 2^FFT_n = FFT_h
 #define  FFT_h 512
 
-uint2 uv_to_uint(float2 uv) {
+uint2 uv_to_uint_index(float2 uv) {
 	float2 space = 1. / FFT_h;
 	float2 offset = space * 0.5;
-	return (uv - offset) / space;
+	uint2 index = (uv - offset) / space;
+	return index;
 }
 
 float2 index_to_uv(uint2 index) {

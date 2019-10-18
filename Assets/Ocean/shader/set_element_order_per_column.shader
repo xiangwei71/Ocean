@@ -43,7 +43,7 @@
 			float2 frag(v2f i) : SV_Target
 			{
 				// 轉成整數索引
-				uint2 index = uv_to_uint(i.uv);
+				uint2 index = uv_to_uint_index(i.uv);
 				
 				// bit inverse
 				index.y = bit_inverse(index.y);
