@@ -3,7 +3,16 @@ guid: 8ffef7d4eb2debe4fa8864eaae0b612f
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mat: {instanceID: 0}
+  - buffer_des: {instanceID: 0}
+  - buffer_src: {instanceID: 0}
+  - input_texture: {instanceID: 0}
+  - Fill: {fileID: 2100000, guid: 40a8ce3f03a02dc4ba0f49087745c2ac, type: 2}
+  - Transpose: {fileID: 2100000, guid: a6a13a7e17acd0442b7f0e0bd27124a6, type: 2}
+  - set_element_order_per_column: {fileID: 2100000, guid: 7104ee19d984b8d4f8ff5b261e58836e,
+      type: 2}
+  - add_or_minus: {fileID: 2100000, guid: 31b3476ff26ca054fbe53bdf92ff9b33, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

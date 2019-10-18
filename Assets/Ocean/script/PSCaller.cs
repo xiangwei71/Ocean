@@ -13,12 +13,9 @@ public class PSCaller : MonoBehaviour {
     public Material Fill;
     public Material Transpose;
     public Material set_element_order_per_column;
+    public Material add_or_minus;
 
     int h = 512;
-
-    int do_bit_reverse (int value, int bit_length) {
-        return 0;
-    }
 
     // Start is called before the first frame update
     void Start () {
@@ -27,10 +24,14 @@ public class PSCaller : MonoBehaviour {
 
         Graphics.Blit(input_texture, buffer_src, Fill);
 
-        Graphics.Blit(buffer_src, buffer_des, set_element_order_per_column);
-        swap_texture(ref buffer_src, ref buffer_des);
+        add_or_minus.SetInt("_order", 8);
+        Graphics.Blit(buffer_src, buffer_des, add_or_minus);
+        //swap_texture(ref buffer_src, ref buffer_des);
 
-        Graphics.Blit(buffer_src, buffer_des, Transpose);
+        //Graphics.Blit(buffer_src, buffer_des, set_element_order_per_column);
+        //swap_texture(ref buffer_src, ref buffer_des);
+
+        //Graphics.Blit(buffer_src, buffer_des, Transpose);
         //swap_texture(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_des);
