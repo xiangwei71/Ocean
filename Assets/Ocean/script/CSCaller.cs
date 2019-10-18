@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class CSCaller : MonoBehaviour {
     public Material mat;
-    public ComputeShader shader;
+    public ComputeShader s_Fill;
+    public ComputeShader s_Swap;
+    public ComputeShader s_Transpose;
+    public ComputeShader s_set_element_order_per_column;
     public RenderTexture buffer_des;
     public RenderTexture buffer_src;
     public Texture2D input_texture;
@@ -47,22 +50,17 @@ public class CSCaller : MonoBehaviour {
         }
 
         bit_reverse.SetData (buffer);
-        shader.SetBuffer (kernal, "bit_reverse", bit_reverse);
+        s_set_element_order_per_column.SetBuffer (kernal, "bit_reverse", bit_reverse);
     }
 
     // Start is called before the first frame update
     void Start () {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
+        mat.SetTexture("_MainTex", buffer_des);
 
-        kernal = shader.FindKernel ("CSMain");
-        shader.SetTexture (kernal, "input_texture", input_texture);
-        shader.SetTexture (kernal, "des", buffer_des);
-        shader.SetTexture (kernal, "src", buffer_src);
-
+        //特別的設定
         set_bit_reverse ();
-
-        mat.SetTexture ("_MainTex", buffer_des);
     }
 
     void init_buffer (ref RenderTexture buffer, int w, int h, RenderTextureFormat format) {
@@ -73,7 +71,21 @@ public class CSCaller : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        shader.Dispatch (kernal, 512 / 8, 512 / 8, 1);
+        s_Fill.SetTexture(kernal, "input_texture", input_texture);
+        s_Fill.SetTexture(kernal, "src", buffer_src);
+        s_Fill.Dispatch(kernal, 512 / 8, 512 / 8, 1);
+
+        s_Transpose.SetTexture(kernal, "src", buffer_src);
+        s_Transpose.SetTexture(kernal, "des", buffer_des);
+        s_Transpose.Dispatch(kernal, 512 / 8, 512 / 8, 1);
+
+        s_Swap.SetTexture(kernal, "src", buffer_src);
+        s_Swap.SetTexture(kernal, "des", buffer_des);
+        s_Swap.Dispatch(kernal, 512 / 8, 512 / 8, 1);
+
+        //s_set_element_order_per_column.SetTexture(kernal, "src", buffer_src);
+        //s_set_element_order_per_column.SetTexture(kernal, "des", buffer_des);
+        //s_set_element_order_per_column.Dispatch(kernal, 512 / 8, 512 / 8, 1);
     }
 
     private void OnDisable () {

@@ -7,8 +7,7 @@ RWTexture2D<float2> des;
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-
-	uint h = 512;
-	uint2 index = uint2(h - id.y, h - id.x);
-	des[id.xy] = src[index];
+	float2 temp = des[id.xy];
+	des[id.xy] = src[id.xy];
+	src[id.xy] = des[id.xy];
 }

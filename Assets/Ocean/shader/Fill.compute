@@ -1,14 +1,11 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
 #pragma kernel CSMain
 
+Texture2D<float4> input_texture;
 RWTexture2D<float2> src;
-RWTexture2D<float2> des;
 
 [numthreads(8, 8, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-
-	uint h = 512;
-	uint2 index = uint2(h - id.y, h - id.x);
-	des[id.xy] = src[index];
+	src[id.xy] = float2(input_texture[id.xy].r, 0);
 }
