@@ -42,9 +42,7 @@
 			float2 frag(v2f i) : SV_Target
 			{
 				float2 shfit_uv = (i.uv + float2(0.5,0.5)) % float2(1.,1.);
-				float2 col = tex2D(_MainTex, shfit_uv).rg;
-
-                return col;
+				return tex2D(_MainTex, shfit_uv).rg;
             }
             ENDCG
         }

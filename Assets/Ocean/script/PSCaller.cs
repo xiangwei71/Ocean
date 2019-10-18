@@ -15,6 +15,7 @@ public class PSCaller : MonoBehaviour {
     public Material set_element_order_per_column;
     public Material add_or_minus;
     public Material multiply_weight;
+    public Material Shift;
 
     int h = 512;
 
@@ -27,6 +28,7 @@ public class PSCaller : MonoBehaviour {
         Graphics.Blit(input_texture, buffer_src, Fill);
 
         FFT(ref buffer_src, ref buffer_des);
+        //do_Shift(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_src);
     }
@@ -59,6 +61,12 @@ public class PSCaller : MonoBehaviour {
         }
 
        do_add_or_minus(ref  b1, ref  b2, n_minus_1); 
+    }
+
+    void do_Shift(ref RenderTexture b1, ref RenderTexture b2)
+    {
+        Graphics.Blit(b1, b2, Shift);
+        swap_texture(ref b1, ref b2);
     }
 
     void do_set_element_order_per_column(ref RenderTexture b1, ref RenderTexture b2)
