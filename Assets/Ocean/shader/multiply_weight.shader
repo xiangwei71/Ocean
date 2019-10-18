@@ -54,7 +54,7 @@
 
 				//return float2(0, power_of_W);
 				float2 weight = W(power_of_W, FFT_h);
-				return weight;
+				//return weight;
 				float2 c = tex2D(_MainTex, i.uv).rg;
 				return complex_multiply(weight, c);
             }

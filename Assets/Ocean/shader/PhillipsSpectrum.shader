@@ -5,7 +5,6 @@
 		_MainTex("Texture", 2D) = "white" {}
 		_wind("wind dir",Vector) = (1.,0.,0.,0.)
 		_A("A", Float) = 2.
-		_two_Pi("two_Pi", Float) = 6.28
 
 		_V("wind Veloicty", Float) = 1000.
 		_g("g", Float) = 9.8
@@ -28,7 +27,6 @@
 			//公式從這裡看來的
 			//https://zhuanlan.zhihu.com/p/64414956
 
-			float _two_Pi;
 			float2 _wind;
 			float _A;
 			float _V;
@@ -57,7 +55,7 @@
 				// Box-Muller
 				// https://zhuanlan.zhihu.com/p/67776340
 				float r = sqrt(-2. * log(u1));
-				return float2(r * cos(_two_Pi * u2),r * sin(_two_Pi * u2));
+				return float2(r * cos(FFT_2_PI * u2),r * sin(FFT_2_PI * u2));
 			}
 
 			// https://zhuanlan.zhihu.com/p/64414956
@@ -138,7 +136,7 @@
 				float2 uv = i.uv;
 
 				//float t = 0.;
-				float t = _two_Pi *_Time.y;
+				float t = FFT_2_PI *_Time.y;
 				float2 k = uv * 2. - 1.;// 0~1 to -1~1
 				return float4(h(uv, k, t), 0., 1.);
 				//return float4(t,0., 0., 1.);
