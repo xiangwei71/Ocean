@@ -17,6 +17,7 @@ public class PSCaller : MonoBehaviour {
     public Material multiply_weight;
     public Material Shift;
     public Material multiply;
+    public Material PhillipsSpectrum;
 
     int h = 512;
 
@@ -25,13 +26,28 @@ public class PSCaller : MonoBehaviour {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
 
+       
+
+        mat.SetTexture("_MainTex", buffer_src);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        Graphics.Blit(null, buffer_src, PhillipsSpectrum);
+        do_Shift(ref buffer_src, ref buffer_des);
+        Inverse_FFT(ref buffer_src, ref buffer_des, false);
+    }
+
+    //測式IFFT是正確的
+    void check_FFT_and_IFFT_result() {
         // fill image
         Graphics.Blit(input_texture, buffer_src, Fill);
 
         FFT(ref buffer_src, ref buffer_des);
         //do_Shift(ref buffer_src, ref buffer_des);
 
-        Inverse_FFT(ref buffer_src, ref buffer_des);
+        Inverse_FFT(ref buffer_src, ref buffer_des,true);
 
         mat.SetTexture("_MainTex", buffer_src);
     }
@@ -108,7 +124,7 @@ public class PSCaller : MonoBehaviour {
         butterfly(ref b1, ref b2, false);
     }
 
-    void Inverse_FFT(ref RenderTexture b1, ref RenderTexture b2) {
+    void Inverse_FFT(ref RenderTexture b1, ref RenderTexture b2,bool do_divide) {
         butterfly(ref b1, ref b2,true);
 
         // transpose
@@ -117,16 +133,13 @@ public class PSCaller : MonoBehaviour {
 
         butterfly(ref b1, ref b2,true);
 
-        do_multiply(ref b1, ref b2);
+        if(do_divide)
+            do_multiply(ref b1, ref b2);
     }
 
     void do_multiply(ref RenderTexture b1, ref RenderTexture b2) {
         multiply.SetFloat("_factor", 1.0f/(h*h));
         Graphics.Blit(b1, b2, multiply);
         swap_texture(ref b1, ref b2);
-    }
-
-// Update is called once per frame
-    void Update () {
     }
 }

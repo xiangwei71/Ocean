@@ -8,7 +8,6 @@
 
 		_V("wind Veloicty", Float) = 1000.
 		_g("g", Float) = 9.8
-		_L("L",Float) = 102040.816327// (1000. * 1000. / 9.8)
 	}
 		SubShader
 	{
@@ -133,10 +132,12 @@
 
 			float2 frag(v2f i) : SV_Target
 			{
+				_L = _V * _V / _g;
 				float2 uv = i.uv;
 
 				//float t = 0.;
-				float t = FFT_2_PI *_Time.y;
+				//float t = 0.00000001*_Time.y;
+				float t =  _Time.y;
 				float2 k = uv * 2. - 1.;// 0~1 to -1~1
 				return h(uv, k, t);
 			}
