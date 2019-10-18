@@ -213,10 +213,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mat: {fileID: 2100000, guid: a81111b880f1d40448e9522d790e65d3, type: 2}
-  shader: {fileID: 7200000, guid: 0a9c87f515e3add4196597bbb6ce03ab, type: 3}
   buffer_des: {fileID: 0}
   buffer_src: {fileID: 0}
   input_texture: {fileID: 2800000, guid: ab7aafa04482db7489ec4282a17f5d9b, type: 3}
+  Fill: {fileID: 2100000, guid: 40a8ce3f03a02dc4ba0f49087745c2ac, type: 2}
+  Transpose: {fileID: 2100000, guid: a6a13a7e17acd0442b7f0e0bd27124a6, type: 2}
+  set_element_order_per_column: {fileID: 2100000, guid: 7104ee19d984b8d4f8ff5b261e58836e,
+    type: 2}
 --- !u!1 &170171480
 GameObject:
   m_ObjectHideFlags: 0

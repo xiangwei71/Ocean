@@ -40,8 +40,9 @@ public class PSCaller : MonoBehaviour {
         set_bit_reverse ();
 
         Graphics.Blit(input_texture, buffer_src, Fill);
-        Graphics.Blit(buffer_src, buffer_des, Transpose);
-        swap_texture(ref buffer_src, ref buffer_des);
+        Graphics.Blit(buffer_src, buffer_des, set_element_order_per_column);
+        //Graphics.Blit(buffer_src, buffer_des, Transpose);
+        //swap_texture(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_des);
     }

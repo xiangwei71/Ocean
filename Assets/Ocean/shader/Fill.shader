@@ -41,8 +41,9 @@
 
             float2 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
-				return float2(col.r,0);
+                float2 complex =float2(0,0);
+				complex.x = tex2D(_MainTex, i.uv).r;
+				return complex;
             }
             ENDCG
         }

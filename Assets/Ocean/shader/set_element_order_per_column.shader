@@ -16,6 +16,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+			#include "FFT_Utils.cginc"
 
             struct appdata
             {
@@ -38,13 +39,20 @@
             }
 
             sampler2D _MainTex;
-			uniform int bit_reverse[512];
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                fixed4 col = tex2D(_MainTex, i.uv);
-				//des[id.xy] = src[uint2(id.x, bit_reverse[id.y].index)];
-                return col;
+			float2 frag(v2f i) : SV_Target
+			{
+				// 轉成整數索引
+				uint2 index = uv_to_uint(i.uv);
+				
+				// bit inverse
+				index.y = bit_inverse(index.y);
+
+				//轉回float索引
+				float2 target_uv = index_to_uv(index);//float2 target_uv = (index * 1.) / h;
+
+				float2 complex = tex2D(_MainTex, target_uv).rg;
+				return complex;
             }
             ENDCG
         }
