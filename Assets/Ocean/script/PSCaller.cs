@@ -26,13 +26,7 @@ public class PSCaller : MonoBehaviour {
         // fill image
         Graphics.Blit(input_texture, buffer_src, Fill);
 
-        butterfly(ref buffer_src, ref buffer_des);
-
-
-        //Graphics.Blit(buffer_src, buffer_des, Transpose);
-        //swap_texture(ref buffer_src, ref buffer_des);
-
-
+        FFT(ref buffer_src, ref buffer_des);
 
         mat.SetTexture("_MainTex", buffer_src);
     }
@@ -59,18 +53,36 @@ public class PSCaller : MonoBehaviour {
         Debug.Log(n);
         var n_minus_1 = (int)n - 1;
         for (var order = 0; order< n_minus_1; ++order) {
+            //add or minus
             add_or_minus.SetInt("_order", order);
             Graphics.Blit(b1, b2, add_or_minus);
             swap_texture(ref b1, ref b2);
 
+            //multiply weight
             multiply_weight.SetInt("_order", order+1);
             Graphics.Blit(b1, b2, multiply_weight);
             swap_texture(ref b1, ref b2);
         }
 
+        //add or minus
         add_or_minus.SetInt("_order", n_minus_1);
         Graphics.Blit(b1, b2, add_or_minus);
         swap_texture(ref b1, ref b2);
+    }
+
+    void FFT(ref RenderTexture b1, ref RenderTexture b2)
+    {
+        /*二維DFT可以分解成 2次一維DFT
+        B=MX
+        Y=M(B)T
+        */
+        butterfly(ref b1, ref b2);
+
+        // transpose
+        Graphics.Blit(b1, b2, Transpose);
+        swap_texture(ref b1, ref b2);
+
+        butterfly(ref b1, ref b2);
     }
 
 // Update is called once per frame
