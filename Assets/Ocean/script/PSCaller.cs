@@ -18,8 +18,9 @@ public class PSCaller : MonoBehaviour {
     public Material Shift;
     public Material multiply;
     public Material PhillipsSpectrum;
+    public Material cos_wave;
 
-    public WaterBlockManager water_block_manager;
+    public WaterBlockManager [] water_block_manager;
 
     int h = 512;
 
@@ -29,12 +30,18 @@ public class PSCaller : MonoBehaviour {
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
 
         mat.SetTexture("_MainTex", buffer_src);
-        water_block_manager.update_blockss(ref buffer_src);
+        foreach(var m in water_block_manager)
+            m.update_blockss(ref buffer_src);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Graphics.Blit(null, buffer_src, cos_wave);
+        //FFT(ref buffer_src, ref buffer_des);
+    }
+
+    void I_still_not_understand_PhillipsSpectrum() {
         Graphics.Blit(null, buffer_src, PhillipsSpectrum);
         do_Shift(ref buffer_src, ref buffer_des);
         Inverse_FFT(ref buffer_src, ref buffer_des, false);

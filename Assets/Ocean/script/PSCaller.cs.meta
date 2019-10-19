@@ -17,6 +17,8 @@ MonoImporter:
   - Shift: {fileID: 2100000, guid: 97eb5a5f1fa6a4144a6833c21e9ca0e4, type: 2}
   - multiply: {fileID: 2100000, guid: f9486feb4cfc97342a9dd8c23854001a, type: 2}
   - PhillipsSpectrum: {fileID: 2100000, guid: 67e322c4265312a4891ad88a562a3c67, type: 2}
+  - cos_wave: {fileID: 2100000, guid: 6761abf8e3350014c8f03a44fae559a5, type: 2}
+  - water_block_manager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

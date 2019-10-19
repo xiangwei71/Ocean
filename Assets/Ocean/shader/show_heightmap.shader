@@ -62,7 +62,9 @@
 			float4 frag(v2f i) : SV_Target
 			{
 				//return float4(i.height_map_uv.x,0,0,1);
-				return  float4(tex2D(_MainTex, i.height_map_uv).rrr,1.);
+				float h = tex2D(_MainTex, i.height_map_uv).r;
+				h /= 10;
+				return  float4(h,h,h,1.);
                 //return float4(0.25,0.5,0.25,1);
             }
             ENDCG
