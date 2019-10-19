@@ -31,7 +31,7 @@ public class PSCaller : MonoBehaviour {
 
         mat.SetTexture("_MainTex", buffer_src);
         foreach(var m in water_block_manager)
-            m.update_blockss(ref buffer_src);
+            m.update_blocks(ref buffer_src);
     }
 
     // Update is called once per frame

@@ -9,16 +9,18 @@ public class WaterBlockManager : MonoBehaviour
     void Awake()
     {
         mat_list = new List<Material>();
-        var h = 1;
-        var space = 2;
-        for (var x = 0; x < h; ++x) {
+        var h = 2;
+        var space = 511;
+        for (var x = 0; x < h; ++x)
+        {
             for (var y = 0; y < h; ++y)
             {
-                var block=GameObject.Instantiate<GameObject>(water_block, transform);
-                block.transform.localPosition = new Vector3(space * x, 0, space*y);
+                var block = GameObject.Instantiate<GameObject>(water_block, transform);
+                block.transform.localPosition = new Vector3(space * x, 0, space * y);
 
-                var m_renders=block.GetComponentsInChildren<MeshRenderer>();
-                foreach (var m_render in m_renders) {
+                var m_renders = block.GetComponentsInChildren<MeshRenderer>();
+                foreach (var m_render in m_renders)
+                {
                     var mat = m_render.material;
                     mat.SetVector("_block_offset", new Vector4(x, y, 0, 0));
                     mat_list.Add(mat);
@@ -27,7 +29,16 @@ public class WaterBlockManager : MonoBehaviour
         }
     }
 
-    public void update_blockss(ref RenderTexture tex) {
+    public void update_blocks(ref Texture2D tex)
+    {
+        foreach (var mat in mat_list)
+        {
+            mat.SetTexture("_MainTex", tex);
+        }
+    }
+
+    public void update_blocks(ref RenderTexture tex)
+    {
         foreach (var mat in mat_list)
         {
             mat.SetTexture("_MainTex", tex);

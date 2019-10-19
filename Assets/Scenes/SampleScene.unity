@@ -140,7 +140,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 12c6b90845833884aa6697d55e9347d9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.51
+      value: -2.51
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 12c6b90845833884aa6697d55e9347d9,
         type: 3}
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4085151f2d5094c99ac539794d2803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  water_block: {fileID: 3601669535820766873, guid: 9a74b86b16aff72409072ae48209ceae,
+  water_block: {fileID: 8040372206027516441, guid: 9a74b86b16aff72409072ae48209ceae,
     type: 3}
 --- !u!1 &2138677391
 GameObject:
