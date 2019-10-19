@@ -19,6 +19,7 @@
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
+			#include "FFT_Utils.cginc"
 
             struct appdata
             {
@@ -48,8 +49,14 @@
 				uv.x = 1 - uv.x;
 				uv.y = 1 - uv.y;
 
-				float2 block = float2(1. / 8, 1. / 8);
-				float2 height_map_uv = uv * block + _block_offset * block;
+				uint2 block = FFT_h/8;
+
+				
+				//因為block之間會重疊
+				//比如說2個block分別是 0~63 ,63~126
+				uint2 height_map_index= uv * (block-1) + _block_offset * (block-1);
+				float2 height_map_uv = index_to_uv(height_map_index);
+
 				// read height map
 				float h = tex2Dlod(_MainTex, float4(height_map_uv, 0, 0)).r;
 				v.vertex.y = 1.2*h;
