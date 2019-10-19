@@ -19,6 +19,8 @@ public class PSCaller : MonoBehaviour {
     public Material multiply;
     public Material PhillipsSpectrum;
 
+    public WaterBlockManager water_block_manager;
+
     int h = 512;
 
     // Start is called before the first frame update
@@ -26,9 +28,8 @@ public class PSCaller : MonoBehaviour {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
 
-       
-
         mat.SetTexture("_MainTex", buffer_src);
+        water_block_manager.update_blockss(ref buffer_src);
     }
 
     // Update is called once per frame

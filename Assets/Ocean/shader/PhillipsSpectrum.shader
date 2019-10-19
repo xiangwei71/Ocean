@@ -95,6 +95,8 @@
 
 				float2 E1 = gaussian_distribution(float2(random_clamp(offset1),random_clamp(offset2)));
 				float2 E2 = gaussian_distribution(float2(random_clamp(offset3),random_clamp(offset4)));
+				//float2 E1 = float2(random_clamp(offset1), random_clamp(offset2));
+				//float2 E2 = float2(random_clamp(offset3), random_clamp(offset4));
 
 				//return offset1;
 				//return E2;    
@@ -146,7 +148,7 @@
 
 				//float t = 0.;
 				//float t =   _Time.y;
-				float t = 0.0000001*_Time.y;
+				float t = 0.0000001 * _Time.y;
 				return h(uv, k, t);
 			}
 			ENDCG
