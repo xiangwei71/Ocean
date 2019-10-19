@@ -67,6 +67,7 @@
 
 			float2 h0(float2 k, float2 E,float K) {
 				float S = sqrt(Pn(k,K) / 2.);
+				//return float2(S, S);
 				return S * E;
 			}
 
@@ -100,7 +101,6 @@
 
 				float K = length(k);
 				K = (K > 0.0001) ? K : 0.0001;
-				return h0(k, E1, K);
 				return complex_multiply(h0(k, E1, K), e_i(w(K) * t))
 				+ complex_multiply(h0_conjugate(-k,E2,K) , e_i(-w(K) * t));
 			}
@@ -129,6 +129,7 @@
 
 			float2 frag(v2f i) : SV_Target
 			{
+				_wind = normalize(_wind);
 				_L = _V * _V / _g;
 				float2 uv = i.uv;
 
@@ -140,15 +141,12 @@
 				index -= FFT_h * 0.5;
 				float2 k = FFT_2_PI * index;
 
-				float detail_factor = 10;
+				float detail_factor =10;
 				k *= detail_factor;
-				
 
 				//float t = 0.;
-				//float t = _Time;
+				//float t =   _Time.y;
 				float t = 0.0000001*_Time.y;
-				
-
 				return h(uv, k, t);
 			}
 			ENDCG
