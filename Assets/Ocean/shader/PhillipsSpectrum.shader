@@ -67,7 +67,6 @@
 
 			float2 h0(float2 k, float2 E,float K) {
 				float S = sqrt(Pn(k,K) / 2.);
-				//return float2(S);
 				return S * E;
 			}
 
@@ -86,7 +85,7 @@
 
 			// n 0.~1.
 			float2 h(float2 n, float2 k,float t) {
-				float2 t1 = k + t;
+				float2 t1 = n+ t;
 				float range = 10.;
 				float2 offset1 = t1 % range;
 				float2 offset2 = t1 + float2(0.45,0.99) % range;
@@ -101,10 +100,8 @@
 
 				float K = length(k);
 				K = (K > 0.0001) ? K : 0.0001;
-				//return e_i(-w(K)*t);
-				//return complex_multiply(h0(k,E1,K) , e_i(w(K)*t));
-				//return complex_multiply(h0_conjugate(-k,E2,K) , e_i(-w(K)*t));
-				return complex_multiply(h0(k,E1,K) , e_i(w(K) * t))
+				return h0(k, E1, K);
+				return complex_multiply(h0(k, E1, K), e_i(w(K) * t))
 				+ complex_multiply(h0_conjugate(-k,E2,K) , e_i(-w(K) * t));
 			}
 
@@ -135,10 +132,15 @@
 				_L = _V * _V / _g;
 				float2 uv = i.uv;
 
+				// 轉成整數索引
+				int2 index = uv_to_uint_index(i.uv);
+				index -= FFT_h * 0.5;
+				float2 k = FFT_2_PI * index; // to 2PI * h/2 ~ 2PI *(h/2-1)
+
 				//float t = 0.;
-				//float t = 0.00000001*_Time.y;
-				float t =  _Time.y;
-				float2 k = uv * 2. - 1.;// 0~1 to -1~1
+				float t = _Time.y;
+				//float t =  _Time.y;
+
 				return h(uv, k, t);
 			}
 			ENDCG
