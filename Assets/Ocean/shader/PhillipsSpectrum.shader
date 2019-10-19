@@ -37,7 +37,12 @@
 
 			float random(float2 v)
 			{
-				return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
+				//return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
+				//發現亂數會影響最後的結果
+				float F = 0.1;
+				float sedd_x = 11;
+				float seed_y = 11.5;
+				return frac(sin(F *dot(v, float2(sedd_x, seed_y))) * 43758.54534);
 			}
 
 			float random_clamp(float2 v) {
@@ -62,7 +67,8 @@
 				float K2 = K * K;
 				float KL = K * _L;
 				float dot_k_wind = abs(dot(k,_wind));
-				return  _A / (K2 * K2) * exp(-1. / (KL * KL)) * dot_k_wind * dot_k_wind;
+				float power = 0.5;
+				return  _A / (K2 * K2) * exp(-1. / (KL * KL)) * pow(dot_k_wind ,power);
 			}
 
 			float2 h0(float2 k, float2 E,float K) {
@@ -148,7 +154,7 @@
 
 				//float t = 0.;
 				//float t =   _Time.y;
-				float t = 0.0000001 * _Time.y;
+				float t = 0.000001 * _Time.y;
 				return h(uv, k, t);
 			}
 			ENDCG

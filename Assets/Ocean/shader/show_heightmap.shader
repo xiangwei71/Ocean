@@ -61,7 +61,7 @@
 
 				// read height map
 				float h = tex2Dlod(_MainTex, float4(height_map_uv, 0, 0)).r;
-				v.vertex.y = 16.2*h;
+				v.vertex.y = 3000*h;
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.height_map_uv = height_map_uv;
@@ -72,7 +72,8 @@
 			{
 				//return float4(i.height_map_uv.x,0,0,1);
 				float h = tex2D(_MainTex, i.height_map_uv).r;
-				h /= 10;
+				//h /= 10;
+				h *= 10;
 				return  float4(h,h,h,1.);
                 //return float4(0.25,0.5,0.25,1);
             }

@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _A: 2
+    - _A: 10
     - _L: 102040.81
     - _V: 100
     - _g: 9.8

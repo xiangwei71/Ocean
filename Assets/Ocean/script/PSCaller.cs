@@ -37,8 +37,13 @@ public class PSCaller : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        I_still_not_understand_PhillipsSpectrum();
+    }
+
+    void test_cos_wave() {
         Graphics.Blit(null, buffer_src, cos_wave);
-        //FFT(ref buffer_src, ref buffer_des);
+        FFT(ref buffer_src, ref buffer_des);
+        do_Shift(ref buffer_src, ref buffer_des);
     }
 
     void I_still_not_understand_PhillipsSpectrum() {
