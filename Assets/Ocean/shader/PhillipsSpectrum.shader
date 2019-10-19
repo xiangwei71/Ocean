@@ -86,7 +86,7 @@
 			// n 0.~1.
 			float2 h(float2 n, float2 k,float t) {
 				float2 t1 = n+ t;
-				float range = 10.;
+				float range = 10;
 				float2 offset1 = t1 % range;
 				float2 offset2 = t1 + float2(0.45,0.99) % range;
 				float2 offset3 = t1 + float2(0.15,-0.6) % range;
@@ -132,14 +132,22 @@
 				_L = _V * _V / _g;
 				float2 uv = i.uv;
 
-				// 轉成整數索引
+				// 轉成整數索引 0~FFT_h-1，比如說0~511
 				int2 index = uv_to_uint_index(i.uv);
+
+				// index to 2PI * h/2 ~ 2PI *(h/2-1)
+				//這等於作了Shift，所以之後要自己Shift回來
 				index -= FFT_h * 0.5;
-				float2 k = FFT_2_PI * index; // to 2PI * h/2 ~ 2PI *(h/2-1)
+				float2 k = FFT_2_PI * index;
+
+				float detail_factor = 10;
+				k *= detail_factor;
+				
 
 				//float t = 0.;
-				float t = _Time.y;
-				//float t =  _Time.y;
+				//float t = _Time;
+				float t = 0.0000001*_Time.y;
+				
 
 				return h(uv, k, t);
 			}
