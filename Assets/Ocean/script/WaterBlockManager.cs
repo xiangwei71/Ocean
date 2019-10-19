@@ -9,7 +9,7 @@ public class WaterBlockManager : MonoBehaviour
     void Awake()
     {
         mat_list = new List<Material>();
-        var h = 8;
+        var h = 1;
         var space = 2;
         for (var x = 0; x < h; ++x) {
             for (var y = 0; y < h; ++y)
@@ -17,10 +17,12 @@ public class WaterBlockManager : MonoBehaviour
                 var block=GameObject.Instantiate<GameObject>(water_block, transform);
                 block.transform.localPosition = new Vector3(space * x, 0, space*y);
 
-                var m_render=block.GetComponent<MeshRenderer>();
-                var mat =m_render.material;
-                mat.SetVector("_block_offset",new Vector4(x,y,0,0));
-                mat_list.Add(mat);
+                var m_renders=block.GetComponentsInChildren<MeshRenderer>();
+                foreach (var m_render in m_renders) {
+                    var mat = m_render.material;
+                    mat.SetVector("_block_offset", new Vector4(x, y, 0, 0));
+                    mat_list.Add(mat);
+                }
             }
         }
     }

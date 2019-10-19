@@ -49,12 +49,14 @@
 				uv.x = 1 - uv.x;
 				uv.y = 1 - uv.y;
 
-				uint2 block = FFT_h/8;
-
-				
-				//因為block之間會重疊
+				//因為block之間會重疊	
 				//比如說2個block分別是 0~63 ,63~126
-				uint2 height_map_index= uv * (block-1) + _block_offset * (block-1);
+				//uint2 block = FFT_h / 8;
+				//uint2 height_map_index= uv * (block-1) + _block_offset * (block-1);
+				//float2 height_map_uv = index_to_uv(height_map_index);
+
+				//我組了1個超大的512x512的grid
+				uint2 height_map_index = uv * (FFT_h - 1);
 				float2 height_map_uv = index_to_uv(height_map_index);
 
 				// read height map
