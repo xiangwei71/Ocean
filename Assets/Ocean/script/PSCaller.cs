@@ -30,8 +30,6 @@ public class PSCaller : MonoBehaviour {
     void Start () {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
-
-        update_texture();
     }
 
     void update_texture() { 
@@ -47,6 +45,8 @@ public class PSCaller : MonoBehaviour {
         I_still_not_understand_PhillipsSpectrum();
         //test_cos_wave();
         //check_FFT_and_IFFT_result();
+
+        update_texture();
     }
 
     void test_cos_wave() {

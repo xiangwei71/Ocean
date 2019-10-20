@@ -7,7 +7,7 @@
 
 float random(float2 v)
 {
-	//return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
+	return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
 	// this can get diffrent viusal result
 	//float F = 0.01,sedd_x = 11,seed_y = 11.5;
 	float F = 0.1, sedd_x = 11, seed_y = 11.5;
