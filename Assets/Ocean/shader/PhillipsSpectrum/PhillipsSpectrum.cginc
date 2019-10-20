@@ -104,6 +104,6 @@ float2 h(float2 n, float2 k, float t, float L, float2 wind, float A, float g) {
 	//return e_i(w(K, g) * t);
 	//return  h0(k, E1, K, L, wind, A);
 
-	return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t));
+	return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t))
 	+complex_multiply(h0_conjugate(-k, E2, K, L, wind, A), e_i(-w(K, g) * t));
 }
