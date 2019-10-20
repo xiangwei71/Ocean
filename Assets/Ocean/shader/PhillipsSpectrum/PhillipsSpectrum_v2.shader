@@ -23,9 +23,6 @@
 				#include "UnityCG.cginc"
 				#include "PhillipsSpectrum.cginc"
 
-				//公式從這裡看來的
-				//https://zhuanlan.zhihu.com/p/64414956
-
 				float2 _wind;
 				float _A;
 				float _V;

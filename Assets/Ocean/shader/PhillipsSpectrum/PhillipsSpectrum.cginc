@@ -2,10 +2,13 @@
 
 #define detail_factor 10
 
+//formula is get from here
+//https://zhuanlan.zhihu.com/p/64414956
+
 float random(float2 v)
 {
 	//return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
-	//發現亂數會影響最後的結果
+	// this can get diffrent viusal result
 	//float F = 0.01,sedd_x = 11,seed_y = 11.5;
 	float F = 0.1, sedd_x = 11, seed_y = 11.5;
 
@@ -59,7 +62,7 @@ float2 e_i(float x) {
 
 // n 0.~1.
 float2 h(float2 n, float2 k, float t, float L,float2 wind, float A,float g) {
-	float2 t1 = n;//satic 原來這個是要固定的呀
+	float2 t1 = n;
 	float range = 10;
 	float2 offset1 = t1 % range;
 	float2 offset2 = t1 + float2(0.45, 0.99) % range;

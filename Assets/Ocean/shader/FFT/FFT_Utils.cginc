@@ -2,6 +2,19 @@
 #define  FFT_h 512
 #define FFT_2_PI 6.28
 
+//bad sample point
+//https://www.geogebra.org/m/vxs5cxjx
+
+//good sample point
+//https://www.geogebra.org/m/rdmqeypu
+float2 sapmle_point_offset_and_scale(float2 uv) {
+	float2 offset = float2(1. / FFT_h, 1. / FFT_h);
+	float2 dist = float2(1, 1) - offset;
+	uv = uv - offset;
+	uv /= dist;
+	return uv;
+}
+
 uint2 uv_to_uint_index(float2 uv) {
 	float2 space = 1. / FFT_h;
 	float2 offset = space * 0.5;
