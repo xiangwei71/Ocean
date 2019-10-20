@@ -1,4 +1,4 @@
-#include "../FFT/FFT_Utils.cginc"
+﻿#include "../FFT/FFT_Utils.cginc"
 
 #define detail_factor 10
 
@@ -33,22 +33,43 @@ float2 gaussian_distribution(float2 u) {
 }
 
 // https://zhuanlan.zhihu.com/p/64414956
-float Pn(float2 k, float K, float L,float2 wind,float A) {
+float Pn(float2 k, float K, float L, float2 wind, float A) {
 	float K2 = K * K;
 	float KL = K * L;
 	float dot_k_wind = abs(dot(k, wind));
+
+	//(1)center(low frequency) is more than outter
+	float circular_fade = A / (K2 * K2);
+
+	//(2)then wind velocity is small, center(low frequency) will be removed.
+	//https://www.geogebra.org/m/u2vw5zup
+	float center_hole = exp(-1. / (KL * KL));
+
+	//(3)sysmetry along vector othogonal to wind
 	float power = 0.5;
-	return  A / (K2 * K2) * exp(-1. / (KL * KL)) * pow(dot_k_wind, power);
+	float sysmetry = pow(dot_k_wind, power);
+
+	//return  A / (K2 * K2) * exp(-1. / (KL * KL)) * pow(dot_k_wind, power);
+	return  circular_fade * center_hole * sysmetry;
 }
 
-float2 h0(float2 k, float2 E, float K, float L, float2 wind,  float A) {
-	float S = sqrt(Pn(k, K, L, wind,A) / 2.);
+// like play 
+float2 h0(float2 k, float2 E, float K, float L, float2 wind, float A) {
+
+	//有點像產生長短不一樣的飛镖
+	//get darts (have different long)
+	float S = sqrt(Pn(k, K, L, wind, A) / 2.);
 	//return float2(S, S);
+
+	//開始射飛镖
+	//gaussian_distribution代表射中的位置(complex)
+	//射中後再把comple乘上飛鏢的長度(把射中的飛鏢往圓心靠近、或遠離)
+	// Playing darts by gaussian_distribution
 	return S * E;
 }
 
-float2 h0_conjugate(float2 k, float2 E, float K, float L, float2 wind,float A) {
-	float2 c_h0 = h0(k, E, K, L, wind,A);
+float2 h0_conjugate(float2 k, float2 E, float K, float L, float2 wind, float A) {
+	float2 c_h0 = h0(k, E, K, L, wind, A);
 	return float2(c_h0.x, -c_h0.y);
 }
 
@@ -61,7 +82,7 @@ float2 e_i(float x) {
 }
 
 // n 0.~1.
-float2 h(float2 n, float2 k, float t, float L,float2 wind, float A,float g) {
+float2 h(float2 n, float2 k, float t, float L, float2 wind, float A, float g) {
 	float2 t1 = n;
 	float range = 10;
 	float2 offset1 = t1 % range;
@@ -80,6 +101,12 @@ float2 h(float2 n, float2 k, float t, float L,float2 wind, float A,float g) {
 	float K = length(k);
 	K = (K > 0.0001) ? K : 0.0001;
 
+	//return e_i(w(K, g) * t);
+	//return  h0(k, E1, K, L, wind, A);
+
+	//h0* e_i有點像飛鏢是會轉動的
+	//return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t));
+
 	return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t));
-	+ complex_multiply(h0_conjugate(-k, E2, K, L, wind, A), e_i(-w(K, g) * t));
+	+complex_multiply(h0_conjugate(-k, E2, K, L, wind, A), e_i(-w(K, g) * t));
 }
