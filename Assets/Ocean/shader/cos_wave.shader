@@ -16,6 +16,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+			#include "FFT/FFT_Utils.cginc"
 
             struct appdata
             {
@@ -44,9 +45,23 @@
 				return pow(y, 2);
 			}
 
+			float2 offset_and_scale(float2 uv) {
+				float2 offset = float2(1. / FFT_h, 1. / FFT_h);
+				float2 dist = float2(1, 1) - offset;
+				uv = uv - offset;
+				uv /= dist;
+				return uv;
+			}
+
 			float2 frag(v2f i) : SV_Target
 			{
+				//bad sample point
+				//https://www.geogebra.org/m/vxs5cxjx
+
+				//good sample point
+				//https://www.geogebra.org/m/rdmqeypu
 				float2 uv = i.uv;
+				uv = offset_and_scale(uv);
 				uv = uv * 2 - 1; // to -1~1
 				uv *= 3.14; // to -Pi~Pi
 				float x = uv.x;

@@ -61,8 +61,14 @@
 
 				// read height map
 				float h = tex2Dlod(_MainTex, float4(height_map_uv, 0, 0)).r;
+				
+
+				//for IFFT wave
 				//detail_factor變大時，亮度會變底，這個要調高;
 				v.vertex.y = 30* pow(detail_factor,2) *h;
+
+				//for cos wave
+				//v.vertex.y = 30*h;
 
 				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.height_map_uv = height_map_uv;
@@ -74,15 +80,19 @@
 				//return float4(i.height_map_uv.x,0,0,1);
 				float h = tex2D(_MainTex, i.height_map_uv).r;
 				//detail_factor變大時，亮度會變弱，這個要調高;
+				
+				//for IFFT wave
 				h *= 10*detail_factor;
+				//for cos wave
+				//h*= 0.1;
 
 				float4 down_color = float4(0, abs(h), 0.2, 1);
 				float4 up_color = float4(h, h, h, 1.);
+				//return up_color;
 				if (h < 0.1)
 					return down_color;
 
 				return up_color;
-				return  lerp(down_color, pow(up_color, 1.5), 0.5);
                 //return float4(0.25,0.5,0.25,1);
             }
             ENDCG
