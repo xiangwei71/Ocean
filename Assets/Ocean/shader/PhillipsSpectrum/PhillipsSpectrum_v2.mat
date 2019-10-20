@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _A: 10
-    - _V: 1000
+    - _V: 2
     - _g: 9.8
     m_Colors:
     - _wind: {r: 1, g: 0, b: 0, a: 0}

@@ -56,14 +56,14 @@ float Pn(float2 k, float K, float L, float2 wind, float A) {
 // like play 
 float2 h0(float2 k, float2 E, float K, float L, float2 wind, float A) {
 
-	//有點像產生長短不一樣的飛镖
+	//有點像產生長短(能量)不一樣的飛镖
 	//get darts (have different long)
 	float S = sqrt(Pn(k, K, L, wind, A) / 2.);
 	//return float2(S, S);
 
 	//開始射飛镖
 	//gaussian_distribution代表射中的位置(complex)
-	//射中後再把comple乘上飛鏢的長度(把射中的飛鏢往圓心靠近、或遠離)
+	//但complex 包含長度(會影響飛鏢的能量)和轉動(用來偏移e_i)
 	// Playing darts by gaussian_distribution
 	return S * E;
 }
@@ -103,9 +103,6 @@ float2 h(float2 n, float2 k, float t, float L, float2 wind, float A, float g) {
 
 	//return e_i(w(K, g) * t);
 	//return  h0(k, E1, K, L, wind, A);
-
-	//h0* e_i有點像飛鏢是會轉動的
-	//return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t));
 
 	return complex_multiply(h0(k, E1, K, L, wind, A), e_i(w(K, g) * t));
 	+complex_multiply(h0_conjugate(-k, E2, K, L, wind, A), e_i(-w(K, g) * t));
