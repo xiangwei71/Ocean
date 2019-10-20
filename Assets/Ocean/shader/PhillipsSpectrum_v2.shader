@@ -37,7 +37,7 @@
 
 				float random(float2 v)
 				{
-					return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
+					//return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
 					//發現亂數會影響最後的結果
 					float F = 0.1;
 					float sedd_x = 11;
@@ -152,7 +152,7 @@
 					k *= detail_factor;
 
 					//float t = 0.;
-					float t =  0.1* _Time.y;
+					float t =  0.02* _Time.y;
 					return h(uv, k, t);
 				}
 				ENDCG
