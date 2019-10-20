@@ -234,7 +234,7 @@ MonoBehaviour:
   multiply_weight: {fileID: 2100000, guid: e3873b69c0c02c449a76391bebf921cd, type: 2}
   Shift: {fileID: 2100000, guid: 97eb5a5f1fa6a4144a6833c21e9ca0e4, type: 2}
   multiply: {fileID: 2100000, guid: f9486feb4cfc97342a9dd8c23854001a, type: 2}
-  PhillipsSpectrum: {fileID: 2100000, guid: 67e322c4265312a4891ad88a562a3c67, type: 2}
+  PhillipsSpectrum: {fileID: 2100000, guid: c52c8b33819251a4f83d7885057fed03, type: 2}
   cos_wave: {fileID: 2100000, guid: 6761abf8e3350014c8f03a44fae559a5, type: 2}
   water_block_manager:
   - {fileID: 2115647858}

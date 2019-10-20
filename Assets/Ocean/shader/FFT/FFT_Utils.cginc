@@ -1,7 +1,7 @@
 ﻿#define FFT_n 9 // 2^FFT_n = FFT_h
 #define  FFT_h 512
 #define FFT_2_PI 6.28
-#define detail_factor  10
+#define detail_factor 10
 
 uint2 uv_to_uint_index(float2 uv) {
 	float2 space = 1. / FFT_h;

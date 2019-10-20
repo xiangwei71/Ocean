@@ -74,7 +74,7 @@
 				//return float4(i.height_map_uv.x,0,0,1);
 				float h = tex2D(_MainTex, i.height_map_uv).r;
 				//detail_factor變大時，亮度會變弱，這個要調高;
-				h *= detail_factor;
+				h *= 10*detail_factor;
 				return  float4(h,h,h,1.);
                 //return float4(0.25,0.5,0.25,1);
             }

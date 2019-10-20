@@ -37,7 +37,7 @@
 
 				float random(float2 v)
 				{
-					//return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
+					return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
 					//發現亂數會影響最後的結果
 					float F = 0.1;
 					float sedd_x = 11;
@@ -92,7 +92,7 @@
 
 				// n 0.~1.
 				float2 h(float2 n, float2 k,float t) {
-					float2 t1 = n + t;
+					float2 t1 = n ;//satic 原來這個是要固定的呀
 					float range = 10;
 					float2 offset1 = t1 % range;
 					float2 offset2 = t1 + float2(0.45,0.99) % range;
@@ -152,8 +152,7 @@
 					k *= detail_factor;
 
 					//float t = 0.;
-					//float t =   _Time.y;
-					float t = 0.000001 * _Time.y;
+					float t =  0.1* _Time.y;
 					return h(uv, k, t);
 				}
 				ENDCG
