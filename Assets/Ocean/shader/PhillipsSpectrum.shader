@@ -21,7 +21,7 @@
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-			#include "FFT_Utils.cginc"
+			#include "FFT/FFT_Utils.cginc"
 
 			//公式從這裡看來的
 			//https://zhuanlan.zhihu.com/p/64414956
@@ -149,7 +149,6 @@
 				index -= FFT_h * 0.5;
 				float2 k = FFT_2_PI * index;
 
-				float detail_factor =10;
 				k *= detail_factor;
 
 				//float t = 0.;

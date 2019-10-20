@@ -38,6 +38,7 @@ public class PSCaller : MonoBehaviour {
     void Update()
     {
         I_still_not_understand_PhillipsSpectrum();
+        //test_cos_wave();
     }
 
     void test_cos_wave() {
