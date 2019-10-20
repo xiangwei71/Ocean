@@ -19,6 +19,8 @@ public class PSCaller : MonoBehaviour {
     public Material multiply;
     public Material PhillipsSpectrum;
     public Material cos_wave;
+    public Material Stich_left_right;
+    public Material Stich_up_down;
 
     public WaterBlockManager [] water_block_manager;
 
@@ -29,8 +31,13 @@ public class PSCaller : MonoBehaviour {
         init_buffer (ref buffer_des, h, h, RenderTextureFormat.RGFloat);
         init_buffer (ref buffer_src, h, h, RenderTextureFormat.RGFloat);
 
+        update_texture();
+    }
+
+    void update_texture() { 
+
         mat.SetTexture("_MainTex", buffer_src);
-        foreach(var m in water_block_manager)
+        foreach (var m in water_block_manager)
             m.update_blocks(ref buffer_src);
     }
 
@@ -39,6 +46,7 @@ public class PSCaller : MonoBehaviour {
     {
         I_still_not_understand_PhillipsSpectrum();
         //test_cos_wave();
+        //check_FFT_and_IFFT_result();
     }
 
     void test_cos_wave() {
@@ -51,6 +59,20 @@ public class PSCaller : MonoBehaviour {
         Graphics.Blit(null, buffer_src, PhillipsSpectrum);
         do_Shift(ref buffer_src, ref buffer_des);
         Inverse_FFT(ref buffer_src, ref buffer_des, false);
+        do_Stich_left_right(ref buffer_src, ref buffer_des);
+        do_Stich_up_down(ref buffer_src, ref buffer_des);
+    }
+
+    void do_Stich_left_right(ref RenderTexture b1, ref RenderTexture b2)
+    {
+        Graphics.Blit(b1, b2, Stich_left_right);
+        swap_texture(ref b1, ref b2);
+    }
+
+    void do_Stich_up_down(ref RenderTexture b1, ref RenderTexture b2)
+    {
+        Graphics.Blit(b1, b2, Stich_up_down);
+        swap_texture(ref b1, ref b2);
     }
 
     //測式IFFT是正確的
@@ -60,13 +82,10 @@ public class PSCaller : MonoBehaviour {
 
         FFT(ref buffer_src, ref buffer_des);
         //do_Shift(ref buffer_src, ref buffer_des);
-
         Inverse_FFT(ref buffer_src, ref buffer_des,true);
+     }
 
-        mat.SetTexture("_MainTex", buffer_src);
-    }
-
-    void init_buffer (ref RenderTexture buffer, int w, int h, RenderTextureFormat format) {
+   void init_buffer (ref RenderTexture buffer, int w, int h, RenderTextureFormat format) {
         buffer = new RenderTexture (w, h, 0, format);
         buffer.enableRandomWrite = true;
         buffer.Create ();
@@ -130,25 +149,23 @@ public class PSCaller : MonoBehaviour {
         Y=M(B)T
         */
         butterfly(ref b1, ref b2,false);
-
-        // transpose
-        Graphics.Blit(b1, b2, Transpose);
-        swap_texture(ref b1, ref b2);
-
+        do_Transpose(ref b1, ref b2);
         butterfly(ref b1, ref b2, false);
     }
 
     void Inverse_FFT(ref RenderTexture b1, ref RenderTexture b2,bool do_divide) {
         butterfly(ref b1, ref b2,true);
-
-        // transpose
-        Graphics.Blit(b1, b2, Transpose);
-        swap_texture(ref b1, ref b2);
-
+        do_Transpose(ref b1, ref b2);
         butterfly(ref b1, ref b2,true);
 
         if(do_divide)
             do_multiply(ref b1, ref b2);
+    }
+
+    void do_Transpose(ref RenderTexture b1, ref RenderTexture b2) {
+        // transpose
+        Graphics.Blit(b1, b2, Transpose);
+        swap_texture(ref b1, ref b2);
     }
 
     void do_multiply(ref RenderTexture b1, ref RenderTexture b2) {

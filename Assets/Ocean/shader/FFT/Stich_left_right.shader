@@ -1,4 +1,4 @@
-﻿Shader "Hidden/set_element_order_per_column"
+﻿Shader "Hidden/Stich_left_right"
 {
     Properties
     {
@@ -40,19 +40,23 @@
 
             sampler2D _MainTex;
 
+
 			float2 frag(v2f i) : SV_Target
 			{
-				// 轉成整數索引
+				float h = tex2D(_MainTex, i.uv).r;
 				uint2 index = uv_to_uint_index(i.uv);
-				
-				// bit inverse
-				index.y = bit_inverse(index.y);
 
-				//轉回float索引
-				float2 target_uv = index_to_uv(index);//float2 target_uv = (index * 1.) / h;
-
-				float2 complex = tex2D(_MainTex, target_uv).rg;
-				return complex;
+				float2 neighbor_uv = i.uv;
+				if (index.x == 0) {
+					neighbor_uv = index_to_uv(uint2(FFT_h - 1, index.y));
+				}
+				else if (index.x == FFT_h - 1) {
+					neighbor_uv = index_to_uv(uint2(0, index.y));
+				}
+		
+				float neighbor_h = tex2D(_MainTex, neighbor_uv).r;
+				float final_h = (h + neighbor_h) * 0.5;
+				return float2(final_h,0);
             }
             ENDCG
         }

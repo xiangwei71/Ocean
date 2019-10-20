@@ -18,7 +18,8 @@ MonoImporter:
   - multiply: {fileID: 2100000, guid: f9486feb4cfc97342a9dd8c23854001a, type: 2}
   - PhillipsSpectrum: {fileID: 2100000, guid: 67e322c4265312a4891ad88a562a3c67, type: 2}
   - cos_wave: {fileID: 2100000, guid: 6761abf8e3350014c8f03a44fae559a5, type: 2}
-  - water_block_manager: {instanceID: 0}
+  - Stich_left_right: {fileID: 2100000, guid: 988d9cf6f69baf648a09e1199b815ab4, type: 2}
+  - Stich_up_down: {fileID: 2100000, guid: 617c23a96c0a607409333834ef351a2a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

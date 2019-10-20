@@ -45,7 +45,7 @@
             {
                 // sample the texture
 				float4 col = tex2D(_MainTex, i.uv);
-                return float4(pow(col.rg,0.75),0,1);
+                return float4(pow(col.rg,1),0,1);
             }
             ENDCG
         }

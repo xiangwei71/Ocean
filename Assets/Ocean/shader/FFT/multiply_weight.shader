@@ -15,8 +15,8 @@
             #pragma vertex vert
             #pragma fragment frag
 
-            #include "UnityCG.cginc"
 			#include "FFT_Utils.cginc"
+            #include "UnityCG.cginc"
 
             struct appdata
             {
