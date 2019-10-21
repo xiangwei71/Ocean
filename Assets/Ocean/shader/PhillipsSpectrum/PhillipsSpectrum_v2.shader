@@ -20,8 +20,8 @@
 				#pragma vertex vert
 				#pragma fragment frag
 
-				#include "UnityCG.cginc"
 				#include "PhillipsSpectrum.cginc"
+				#include "UnityCG.cginc"
 
 				float2 _wind;
 				float _A;
@@ -68,6 +68,8 @@
 					//這等於作了Shift，所以之後要自己Shift回來
 					index -= FFT_h * 0.5;
 					float2 k = FFT_2_PI * index;
+
+					k *= detail_factor;
 
 					//float t = 0.;
 					float t =  0.02* _Time.y;

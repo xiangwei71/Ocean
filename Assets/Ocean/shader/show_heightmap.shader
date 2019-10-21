@@ -18,8 +18,8 @@
             // make fog work
             #pragma multi_compile_fog
 
-            #include "UnityCG.cginc"
 			#include "PhillipsSpectrum/PhillipsSpectrum.cginc"
+            #include "UnityCG.cginc"
 
             struct appdata
             {
@@ -65,7 +65,7 @@
 
 				//for IFFT wave
 				//detail_factor變大時，亮度會變底，這個要調高;
-				v.vertex.y = 30*h;
+				v.vertex.y = 30 * pow(detail_factor, 2) * h;
 
 				//for cos wave
 				//v.vertex.y = 30*h;
@@ -80,6 +80,7 @@
 				//return float4(i.height_map_uv.x,0,0,1);
 				float h = tex2D(_MainTex, i.height_map_uv).r;
 				//detail_factor變大時，亮度會變弱，這個要調高;
+				h *= 10 * detail_factor;
 
 				float4 down_color = float4(0, abs(h), 0.2, 1);
 				float4 up_color = float4(h, h, h, 1.);

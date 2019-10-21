@@ -1,5 +1,7 @@
 ﻿#include "../FFT/FFT_Utils.cginc"
 
+#define detail_factor 10 //調成0.01 比較容易看到Pn
+
 //formula is get from here
 //https://zhuanlan.zhihu.com/p/64414956
 

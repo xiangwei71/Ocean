@@ -68,6 +68,8 @@
 				//這等於作了Shift，所以之後要自己Shift回來
 				index -= FFT_h * 0.5;
 				float2 k = FFT_2_PI * index;
+				
+				k *= detail_factor;
 
 				//float t = 0.;
 				//float t =   _Time.y;
