@@ -1,7 +1,5 @@
 ﻿#include "../FFT/FFT_Utils.cginc"
 
-#define detail_factor 10
-
 //formula is get from here
 //https://zhuanlan.zhihu.com/p/64414956
 
@@ -9,8 +7,8 @@ float random(float2 v)
 {
 	return frac(sin(dot(v, float2(1113.,11.5))) * 43758.54534);
 	// this can get diffrent viusal result
-	//float F = 0.01,sedd_x = 11,seed_y = 11.5;
-	float F = 0.1, sedd_x = 11, seed_y = 11.5;
+	float F = 0.01,sedd_x = 11,seed_y = 11.5;
+	//float F = 0.1, sedd_x = 11, seed_y = 11.5;
 
 	return frac(sin(F * dot(v, float2(sedd_x, seed_y))) * 43758.54534);
 }
