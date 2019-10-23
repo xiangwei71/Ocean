@@ -94,6 +94,7 @@ public class PSCaller : MonoBehaviour {
         Graphics.Blit(input_texture, buffer_src, Fill);
 
         //做4次回到自己
+        // A-> M -> ∀ -> M* -> A
         FFT(ref buffer_src, ref buffer_des, false);
         FFT(ref buffer_src, ref buffer_des, true);
         FFT(ref buffer_src, ref buffer_des, false);
@@ -106,6 +107,7 @@ public class PSCaller : MonoBehaviour {
         Graphics.Blit(input_texture, buffer_src, Fill);
 
         //做4次回到自己
+        // A-> M* -> ∀ -> M -> A
         Inverse_FFT(ref buffer_src, ref buffer_des, false);
         Inverse_FFT(ref buffer_src, ref buffer_des, true);
         Inverse_FFT(ref buffer_src, ref buffer_des, false);

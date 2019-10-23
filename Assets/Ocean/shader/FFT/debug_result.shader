@@ -52,7 +52,10 @@
 
                 // for  FFT testing
 				float4 col = tex2D(_MainTex, i.uv);
-                return float4(pow(col.rg,1),0,1);
+				return float4(col.r, col.g, 0, 1);
+                
+				// peek 共軛複數
+				//return float4(col.r,-col.g,0,1);
             }
             ENDCG
         }
