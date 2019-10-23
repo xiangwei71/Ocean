@@ -42,10 +42,10 @@
             v2f vert (appdata v)
             {
 				v2f o;
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
-				//從blender匯進來的uv方向不太一樣，這裡動一下手腳
 				float2 uv = o.uv;
+				//uv旋轉90度 (remap to cylinder時，可以控制是內面、還是外面)
 				uv.x = 1 - uv.x;
 				uv.y = 1 - uv.y;
 
@@ -62,10 +62,17 @@
 				// read height map
 				float h = tex2Dlod(_MainTex, float4(height_map_uv, 0, 0)).r;
 				
+				//測試remap to cylinder
+				//float2 polar_cordinate = float2(cos(6.28 * uv.y), sin(6.28 * uv.y));
+				//v.vertex.yz = 200* polar_cordinate+float2(0,-200);
+				//float3 n = float3(0, polar_cordinate);
 
 				//for IFFT wave
 				//detail_factor變大時，亮度會變底，這個要調高;
 				v.vertex.y = 30 * pow(detail_factor, 2) * h;
+				
+				//測試remap to cylinder
+				//v.vertex.xyz += 60 * pow(detail_factor, 2) * h*n;
 
 				//for cos wave
 				//v.vertex.y = 30*h;
