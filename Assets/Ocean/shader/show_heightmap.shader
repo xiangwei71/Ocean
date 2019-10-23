@@ -45,7 +45,7 @@
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
 				float2 uv = o.uv;
-				//uv旋轉90度 (remap to cylinder時，可以控制是內面、還是外面)
+				//uv旋轉180度 (remap to cylinder時，可以控制是內面、還是外面)
 				uv.x = 1 - uv.x;
 				uv.y = 1 - uv.y;
 
