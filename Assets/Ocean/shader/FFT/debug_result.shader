@@ -44,12 +44,13 @@
 
             float4 frag (v2f i) : SV_Target
             {
+				// for height map
 				float h = tex2D(_MainTex, i.uv).r;
 				h = 30 * pow(detail_factor, 2) * h;
 				h = (h + 30) / 60;// for detail_factor==10
 				return float4(h, h, h, 1);
 
-                // sample the texture
+                // for  FFT testing
 				float4 col = tex2D(_MainTex, i.uv);
                 return float4(pow(col.rg,1),0,1);
             }

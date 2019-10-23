@@ -45,6 +45,10 @@ public class PSCaller : MonoBehaviour {
         I_still_not_understand_PhillipsSpectrum();
         //test_cos_wave();
         //check_FFT_and_IFFT_result();
+        
+        //一些FFT實驗
+        //testing_multi_FFT();
+        //testing_multi_Inverse_FFT();
 
         update_texture();
     }
@@ -80,12 +84,35 @@ public class PSCaller : MonoBehaviour {
         // fill image
         Graphics.Blit(input_texture, buffer_src, Fill);
 
-        FFT(ref buffer_src, ref buffer_des);
+        FFT(ref buffer_src, ref buffer_des,false);
         //do_Shift(ref buffer_src, ref buffer_des);
         Inverse_FFT(ref buffer_src, ref buffer_des,true);
      }
 
-   void init_buffer (ref RenderTexture buffer, int w, int h, RenderTextureFormat format) {
+    void testing_multi_FFT() {
+        // fill image
+        Graphics.Blit(input_texture, buffer_src, Fill);
+
+        //做4次回到自己
+        FFT(ref buffer_src, ref buffer_des, false);
+        FFT(ref buffer_src, ref buffer_des, true);
+        FFT(ref buffer_src, ref buffer_des, false);
+        FFT(ref buffer_src, ref buffer_des, true);
+    }
+
+    void testing_multi_Inverse_FFT()
+    {
+        // fill image
+        Graphics.Blit(input_texture, buffer_src, Fill);
+
+        //做4次回到自己
+        Inverse_FFT(ref buffer_src, ref buffer_des, false);
+        Inverse_FFT(ref buffer_src, ref buffer_des, true);
+        Inverse_FFT(ref buffer_src, ref buffer_des, false);
+        Inverse_FFT(ref buffer_src, ref buffer_des, true);
+    }
+
+    void init_buffer (ref RenderTexture buffer, int w, int h, RenderTextureFormat format) {
         buffer = new RenderTexture (w, h, 0, format);
         buffer.enableRandomWrite = true;
         buffer.Create ();
@@ -142,7 +169,7 @@ public class PSCaller : MonoBehaviour {
         swap_texture(ref b1, ref b2);
     }
 
-    void FFT(ref RenderTexture b1, ref RenderTexture b2)
+    void FFT(ref RenderTexture b1, ref RenderTexture b2,bool do_divide)
     {
         /*二維DFT可以分解成 2次一維DFT
         B=MX
@@ -151,6 +178,9 @@ public class PSCaller : MonoBehaviour {
         butterfly(ref b1, ref b2,false);
         do_Transpose(ref b1, ref b2);
         butterfly(ref b1, ref b2, false);
+
+        if (do_divide)
+            do_multiply(ref b1, ref b2);
     }
 
     void Inverse_FFT(ref RenderTexture b1, ref RenderTexture b2,bool do_divide) {
