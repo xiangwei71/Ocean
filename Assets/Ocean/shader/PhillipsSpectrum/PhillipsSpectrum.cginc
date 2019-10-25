@@ -59,7 +59,9 @@ float2 h0(float2 k, float2 E, float K, float L, float2 wind, float A) {
 	//有點像產生長短(能量)不一樣的飛镖
 	//get darts (have different long)
 	float S = sqrt(Pn(k, K, L, wind, A) / 2.);
-	//return float2(S, S);
+
+	//不轉動，只回傳長度(能量)
+	//return float2(S, 1);
 
 	//開始射飛镖
 	//gaussian_distribution代表射中的位置(complex)
